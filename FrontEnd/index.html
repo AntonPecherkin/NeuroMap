@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 200px;
+        right: 10px;
+        height: 100px;
+        width: 100px;
+        margin: 2px;
+        z-index: 5;
+        padding: 5px;
+        text-align: center;
+      }
+    
+      #week {
+        position: absolute;
+        top: 80px;
+        left: 5px;;
+        height: 500px;
+        width: 100px;
+        z-index: 5;
+        
+        padding: 5px;
+        
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      
+      #button_week {
+ height: 50px;
+ width: 300px;      
+ text-decoration:none; 
+ text-align:center; 
+ padding:4px 32px; 
+ margin: 2px;
+ border:solid 1px #004F72; 
+ border-radius:6px;
+ font:24px Arial, Helvetica, sans-serif; 
+ font-weight:bold; 
+ color:#E5FFFF; 
+ background-color:#3BA4C7; 
+ background-image: -moz-linear-gradient(top, #3BA4C7 0%, #1982A5 100%); 
+ background-image: -webkit-linear-gradient(top, #3BA4C7 0%, #1982A5 100%); 
+
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
+ background-image: linear-gradient(top, #3BA4C7 0% ,#1982A5 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  
+  }
+  
+  #button_week:hover{
+    background-color: #7998ab;
+}
+#button_fire {
+ height: 55px;
+ width: 300px;      
+ text-decoration:none; 
+ text-align:center; 
+ padding:4px 32px; 
+ margin: 2px;
+ border:solid 1px #004F72; 
+ -webkit-border-radius:4px;
+ -moz-border-radius:4px; 
+ border-radius: 4px; 
+ font:24px Arial, Helvetica, sans-serif; 
+ font-weight:bold; 
+ color:#E5FFFF; 
+ background-color:#ffe100; 
+ background-image: -moz-linear-gradient(top, #ffe100 0%, #ff1500 100%); 
+ background-image: -webkit-linear-gradient(top, #ffe100 0%, #ff1500 100%); 
+ 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1500', endColorstr='#ff1500',GradientType=0 ); 
+ background-image: linear-gradient(top, #ffe100 0% ,#ff1500 100%);  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+  }
+  
+  #button_fire:hover{
+    background-color: #7998ab;
+}
+
+#button_call{
+ position: absolute;
+ top: 70px;
+ right: 20px;;
+ z-index: 5;
+ text-decoration:none; 
+ text-align:center; 
+ padding:11px 23px; 
+ border:solid 1px #004F72;  
+ -webkit-border-radius:50px;
+ -moz-border-radius:50px; 
+ border-radius: 50px; 
+ font:36px Arial, Helvetica, sans-serif; 
+ font-weight:bold; 
+ color:#ffffff; 
+ background-color:#f21f1f; 
+ background-image: -moz-linear-gradient(top, #f21f1f 0%, #ff7e05 100%); 
+ background-image: -webkit-linear-gradient(top, #f21f1f 0%, #ff7e05 100%); 
+  
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7e05', endColorstr='#ff7e05',GradientType=0 ); 
+ background-image: linear-gradient(top, #f21f1f 0% ,#ff7e05 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+}
+#button_call:hover{
+  background-color:#871717; 
+}
+
+#button{
+ text-decoration:none; 
+ text-align:center;
+ height: 70px;
+ width: 70px;
+ 
+ margin: 2px;
+ border:none; 
+ border-radius:50px;
+ border-radius:50px; 
+ border-radius: 50px; 
+ font:50px Arial, Helvetica, sans-serif; 
+ font-weight:bold; 
+ color:#ffffff; 
+ background-color:#1f31f2; 
+ background-image: -moz-linear-gradient(top, #1f31f2 0%, #0009ff 100%); 
+ background-image: -webkit-linear-gradient(top, #1f31f2 0%, #0009ff 100%); 
+ background-image: -o-linear-gradient(top, #1f31f2 0%, #0009ff 100%); 
+ background-image: -ms-linear-gradient(top, #1f31f2 0% ,#0009ff 100%); 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0009ff', endColorstr='#0009ff',GradientType=0 ); 
+ background-image: linear-gradient(top, #1f31f2 0% ,#0009ff 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  
+}
+    </style>
+  </head>
+  <body>
+  	<div id="floating-panel">
+      <button id="button" onclick="RadiusUp()">+</button>
+      <button id="button" onclick="RadiusDown()">-</button>
+      
+     <!-- <button id="button" onclick="sendRequest()">sendRequest</button>-->
+      
+  </div>
+  <button id="button_call" onclick="sendPoint()">112</button>
+  <div id="week">
+      <button id="button_week" id="button" onclick="Monday(mapCalls)">Monday</button>
+      <button id="button_week" onclick="Tuesday(mapCalls)">Tuesday</button>
+      <button id="button_week" onclick="Wednesday(mapCalls)">Wednesday</button>
+      <button id="button_week" onclick="Thursday(mapCalls)">Thursday</button>
+      <button id="button_week" onclick="Friday(mapCalls)">Friday</button>
+      <button id="button_week" onclick="Saturday(mapCalls)">Saturday</button>
+      <button id="button_week" onclick="Sunday(mapCalls)">Sunday</button>
+      <button id="button_fire" onclick="FireCars()">Forecast</button>
+    </div>
+    <div id="map"></div>
+    <script>
+
+    	var DATA;
+    	var map;
+    	var heatMapData = [];
+		var heatmap, heatmapFlag = false;
+		var backURL = 'http://localhost:3002';
+		var pointLocation;
+		var markers = [];
+
+		var dataM = [];
+		var dataT = [];
+		var dataW = [];
+		var dataTh = [];
+		var dataF = [];
+		var dataSt = [];
+		var dataS = [];
+
+
+
+function getFile (fileName, callback) {
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', fileName);
+
+    request.onloadend = function() {
+
+        parse(request.responseText, callback);
+    }
+
+    request.send();
+
+}
+
+
+function parse(obj, callback) {
+
+    DATA = JSON.parse(obj);
+    callback(DATA);
+
+}
+
+function mapCalls(datDay) {
+		 heatmap = new google.maps.visualization.HeatmapLayer({
+		  data: heatMapData
+		});
+		 heatmap.set('radius',25);
+		heatmap.setMap(map);
+		heatmapFlag = true;
+
+
+}
+      
+
+function initMap() {
+	var Moscow = new google.maps.LatLng(55.76821574350472, 37.619928695666204);
+
+	map = new google.maps.Map(document.getElementById('map'), {
+	  center: Moscow,
+	  zoom: 10.5,
+	});
+
+	google.maps.event.addListener(map, 'click', function(event) {
+   placeMarker(event.latLng);
+   pointLocation = event.latLng;
+   console.log(pointLocation);
+	});
+
+	getFile('./whole_MOSCOW.json', weekData); //путь к файлу
+
+}
+
+   
+
+
+function RadiusUp() {
+        heatmap.set('radius', heatmap.get('radius')+10);
+      }
+
+function RadiusDown() {
+        heatmap.set('radius', heatmap.get('radius')-10);
+      }
+
+function FireCars() {
+        for (var i = 10000; i < 11000; i=i+100) {
+          var latLng = new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c);
+          var marker = new google.maps.Marker({
+            position: latLng,
+            map: map
+          });
+        }
+        marker.setMap(map);
+      }
+
+
+function sendRequest(){
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'http://localhost:3002', false);
+	//xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send();
+	if (xhr.status != 200) {
+	  // обработать ошибку
+	  alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+	} else {
+	  // вывести результат
+	  alert(  xhr.responseText + 'You called in 112. Your call is considered'); // responseText -- текст ответа.
+	}
+
+}
+
+function sendPoint(){
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'http://localhost:3002', false);
+	//xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(pointLocation);
+	if (xhr.status != 200) {
+	  // обработать ошибку
+	  alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+	} else {
+	  // вывести результат
+	  alert( 'You called in 112. Your call is considered\n'+  xhr.responseText ) // responseText -- текст ответа.
+	}
+
+	deleteMarkers();
+
+}
+
+
+
+function placeMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        map: map
+    });
+    //console.log(location.LatLng);
+    markers.push(marker);
+}
+
+function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+      }
+function clearMarkers() {
+        setMapOnAll(null);
+      }
+function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+
+initMap();
+mapCalls();
+
+
+function Monday(callback) {
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataM[i]};
+	}
+
+	callback(dataM,heatMapData);
+}
+function Tuesday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataT[i]};
+	}
+
+	callback(dataT,heatMapData);
+}
+function Wednesday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataW[i]};
+	}
+
+	callback(dataW,heatMapData);
+}
+function Thursday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataTh[i]};
+	}
+
+	callback(dataTh,heatMapData);
+}
+function Friday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataF[i]};
+	}
+
+	callback(dataF,heatMapData);
+}
+function Saturday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataSt[i]};
+	}
+
+	callback(dataSt,heatMapData);
+}
+function Sunday(callback){
+	cleanHeatmap();
+	for (i in DATA){
+		heatMapData[i] = {location: new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c), weight: dataS[i]};
+	}
+
+	callback(dataS,heatMapData);
+}
+
+function weekData(callback){
+
+	for(i in DATA){
+		dataM[i] = DATA[i].calls_wd0;
+	}
+	for(i in DATA){
+		dataT[i] = DATA[i].calls_wd1;
+	}
+	for(i in DATA){
+		dataW[i] = DATA[i].calls_wd2;
+	}
+	for(i in DATA){
+		dataTh[i] = DATA[i].calls_wd3;
+	}
+	for(i in DATA){
+		dataF[i] = DATA[i].calls_wd4;
+	}
+	for(i in DATA){
+		dataSt[i] = DATA[i].calls_wd5;
+	}
+	for(i in DATA){
+		dataS[i] = DATA[i].calls_wd6;
+	}
+}
+
+function cleanHeatmap(){
+	console.log(heatmap);
+	if(heatmapFlag){
+		heatmap.setMap(null);
+	}
+	
+}
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtJsuDvrKcBeURzwglw1kfPDdOyEAEtPU&libraries=visualization&callback=initMap">
+    </script>
+  </body>
+</html>
