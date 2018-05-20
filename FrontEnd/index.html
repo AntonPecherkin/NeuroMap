@@ -169,12 +169,13 @@
       <button id="button_week" onclick="Friday(mapCalls)">Friday</button>
       <button id="button_week" onclick="Saturday(mapCalls)">Saturday</button>
       <button id="button_week" onclick="Sunday(mapCalls)">Sunday</button>
-      <button id="button_fire" onclick="FireCars()">Forecast</button>
+      <button id="button_fire" onclick="SetCars(FireCars)">Forecast</button>
     </div>
     <div id="map"></div>
     <script>
 
     	var DATA;
+    	var CARS;
     	var map;
     	var heatMapData = [];
 		var heatmap, heatmapFlag = false;
@@ -215,17 +216,41 @@ function parse(obj, callback) {
 
 }
 
+function getFileCars (fileName, callback) {
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', fileName);
+
+    request.onloadend = function() {
+
+        parseCars(request.responseText, callback);
+    }
+
+    request.send();
+
+}
+
+
+function parseCars(obj, callback) {
+
+    CARS = JSON.parse(obj);
+    callback(DATA);
+
+}
+
 function mapCalls(datDay) {
 		 heatmap = new google.maps.visualization.HeatmapLayer({
 		  data: heatMapData
 		});
 		 heatmap.set('radius',25);
+		
 		heatmap.setMap(map);
 		heatmapFlag = true;
 
 
 }
-      
+
 
 function initMap() {
 	var Moscow = new google.maps.LatLng(55.76821574350472, 37.619928695666204);
@@ -249,6 +274,7 @@ function initMap() {
 
 
 function RadiusUp() {
+	console.log(heatmap);
         heatmap.set('radius', heatmap.get('radius')+10);
       }
 
@@ -256,9 +282,14 @@ function RadiusDown() {
         heatmap.set('radius', heatmap.get('radius')-10);
       }
 
+function SetCars(callback){
+getFileCars('./car(1).json', weekData);
+callback();
+}
 function FireCars() {
-        for (var i = 10000; i < 11000; i=i+100) {
-          var latLng = new google.maps.LatLng(DATA[i].lat_c, DATA[i].lon_c);
+
+        for (i in CARS) {
+          var latLng = new google.maps.LatLng(CARS[i].lat_c, CARS[i].lon_c);
           var marker = new google.maps.Marker({
             position: latLng,
             map: map
@@ -422,5 +453,8 @@ function cleanHeatmap(){
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtJsuDvrKcBeURzwglw1kfPDdOyEAEtPU&libraries=visualization&callback=initMap">
     </script>
+    <!-- <script type="text/javascript"
+	  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtJsuDvrKcBeURzwglw1kfPDdOyEAEtPU&libraries=geometry">
+	</script> -->
   </body>
 </html>
